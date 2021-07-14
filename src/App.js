@@ -1,55 +1,31 @@
 import React from "react";
 
 export default class App extends React.Component {
-  constructor() {
-    super();
-    console.log("constructor();");
-    this.state = {
-      count: 0,
-      hasChild: true
-    };
-  }
-
   render() {
-    console.log("render();");
     return (
       <div>
-        <h2>Count: {this.state.count}</h2>
-        <button onClick={e => this.add()}>+1</button>
-        <hr />
-        <button onClick={e => this.toggleChild()}>Toggle Child</button>
-        {this.state.hasChild && <Cpn />}
+        <Child name="Harry Potter" age="20" />
+        <Child name="Peter Parker" age="18" />
       </div>
     );
   }
-
-  add() {
-    this.setState({
-      count: this.state.count + 1
-    });
-  }
-
-  toggleChild() {
-    this.setState({
-      hasChild: !this.state.hasChild
-    });
-  }
-
-  componentDidMount() {
-    console.log("componentDidMount();");
-  }
-
-  componentDidUpdate() {
-    console.log("componentDidUpdate();");
-  }
 }
 
-class Cpn extends React.Component {
-  render() {
-    return <h1>A Child Component</h1>;
-  }
+class Child extends React.Component {
+  // 默认
+  // constructor(props) {
+  //   super(props);
+  //   // this.props = props;
+  // }
 
-  componentWillUnmount() {
-    console.log("componentWillUnmount();");
+  render() {
+    return (
+      <div>
+        <hr />
+        <h2>Name: {this.props.name}</h2>
+        <h2>Age: {this.props.age}</h2>
+        <hr />
+      </div>
+    );
   }
 }
