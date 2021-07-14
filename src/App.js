@@ -4,7 +4,6 @@ import React from "react";
 //   constructor() {
 //     super();
 //   }
-
 //   render() {
 //     return (
 //       <h1>Hello World</h1>
