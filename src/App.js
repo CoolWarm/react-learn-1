@@ -1,78 +1,32 @@
 import React from "react";
-import PropTypes from 'prop-types';
-
-// https://react.docschina.org/docs/typechecking-with-proptypes.html
 
 export default class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      count: 0
+    };
+  }
   render() {
     return (
       <div>
-        <ClassChild name="Harry Potter" age={20} hobbies={["magic", "learning"]} />
-        <FunctionChild name="Peter Parker" age={18} hobbies={["hanging", "fighting"]} />
-        <FunctionChild />
-        <ClassChild />
+        <h2>{this.state.count}</h2>
+        <button onClick={e => this.add(1)}> +1 </button>
+        <CountButton onClick={e => this.add(2)} />
       </div>
     );
   }
+  // 子组件使用父组件的this，可以采用 箭头函数 或 .bind()
+  add(value) {
+    this.setState({
+      count: this.state.count + value
+    });
+  }
 }
 
-function FunctionChild(props) {
-  const { name, age, hobbies } = props;
-  return (
-    <div>
-      <h2>Name: {name}</h2>
-      <h2>Age: {age}</h2>
-      <ul>
-        {hobbies.map((item) => {
-          return <li>{item}</li>;
-        })}
-      </ul>
-      <hr />
-    </div>
-  );
-}
-
-FunctionChild.propTypes = {
-  name: PropTypes.string.isRequired,
-  age: PropTypes.number,
-  hobbies: PropTypes.array.isRequired
-}
-
-FunctionChild.defaultProps = {
-  name: "Harry Potter",
-  age: 18,
-  hobbies: []
-}
-
-
-class ClassChild extends React.Component {
+class CountButton extends React.Component {
   render() {
-    const { name, age, hobbies } = this.props;
-    return (
-      <div>
-        <h2>Name: {name}</h2>
-        <h2>Age: {age}</h2>
-        <ul>
-          {
-            hobbies.map((item) => {
-              return <li>{item}</li>
-            })
-          }
-        </ul>
-        <hr />
-      </div>
-    );
-  };
-  
-  static propTypes = {
-    name: PropTypes.string.isRequired,
-    age: PropTypes.number,
-    hobbies: PropTypes.array.isRequired
-  }
-
-  static defaultProps = {
-    name: "Peter Parter",
-    age: 19,
-    hobbies: []
+    const { onClick } = this.props;
+    return <button onClick={onClick}> +2 </button>;
   }
 }
