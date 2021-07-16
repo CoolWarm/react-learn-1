@@ -1,15 +1,19 @@
-.navigation {
+.topbar {
   display: flex;
-  height: 50px;
-  line-height: 50px;
 }
 
-.tag {
-  flex: 1;
+.topbar-left, .topbar-right, .topbar-center {
+  height: 50px;
+  line-height: 50px;
   text-align: center;
 }
 
-.tag.active {
-  color: red;
-  border-bottom: 2px solid darkred;
+.topbar-left, .topbar-right {
+  width: 60px;
+  background-color: lightblue;
+}
+
+.topbar-center {
+  flex: 1;
+  background-color: lemonchiffon;
 }

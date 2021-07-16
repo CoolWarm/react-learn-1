@@ -1,28 +1,20 @@
 import React from "react";
-import Navigation from "./Navigation";
+import TopBarChildren from "./TopBar-children";
+import TopBar from "./TopBar-props";
 
 export default class App extends React.Component {
-  constructor(props) {
-    super(props);
-    
-    this.pageTitles = ["Home", "Message", "Me"];
-    this.state = {
-      currentIndex: 0
-    }
-  }
   render() {
-    const { currentIndex } = this.state;
     return (
       <div>
-        <Navigation pageTitles={this.pageTitles}
-                    tagClick={(index)=>this.changePage(index)} />
-        <h2>{this.pageTitles[currentIndex]}</h2>
+        <TopBarChildren>
+          <button>{"<"}</button>
+          <em>Hello World</em>
+          <a href="/">Go</a>
+        </TopBarChildren>
+        <TopBar left={<button>{"<"}</button>}
+          center={<em>Hello World</em>}
+          right={<a href="/">Go</a>} />
       </div>
     );
-  }
-  changePage(index) {
-    this.setState({
-      currentIndex: index
-    });
   }
 }
