@@ -9,11 +9,10 @@ export default class App extends React.Component {
     }
   }
   render() {
-    const { name, age } = this.state;
     return (
       <div>
         <h1>L</h1>
-        <Profile name={name} age={age} />
+        <Profile {...this.state} />
         <h1>L</h1>
       </div>
     );
@@ -21,11 +20,10 @@ export default class App extends React.Component {
 }
 
 function Profile(props) {
-  const { name, age } = props;
   return (
     <div>
       <h2>M</h2>
-      <Information name={name} age={age} />
+      <Information {...props} />
       <h2>M</h2>
     </div>
   );
