@@ -1,32 +1,28 @@
 import React from "react";
+import Navigation from "./Navigation";
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
+    
+    this.pageTitles = ["Home", "Message", "Me"];
     this.state = {
-      count: 0
-    };
+      currentIndex: 0
+    }
   }
   render() {
+    const { currentIndex } = this.state;
     return (
       <div>
-        <h2>{this.state.count}</h2>
-        <button onClick={e => this.add(1)}> +1 </button>
-        <CountButton onClick={e => this.add(2)} />
+        <Navigation pageTitles={this.pageTitles}
+                    tagClick={(index)=>this.changePage(index)} />
+        <h2>{this.pageTitles[currentIndex]}</h2>
       </div>
     );
   }
-  // 子组件使用父组件的this，可以采用 箭头函数 或 .bind()
-  add(value) {
+  changePage(index) {
     this.setState({
-      count: this.state.count + value
+      currentIndex: index
     });
-  }
-}
-
-class CountButton extends React.Component {
-  render() {
-    const { onClick } = this.props;
-    return <button onClick={onClick}> +2 </button>;
   }
 }
