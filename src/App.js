@@ -36,16 +36,21 @@ function Profile(props) {
   );
 }
 
-class Information extends React.Component {
-  render() {
-    return (
-      <div>
-        <h3>S</h3>
-        <h3>Name: {this.context.name}</h3>
-        <h3>Age: {this.context.age}</h3>
-        <h3>S</h3>
-      </div>
-    );
-  }
+function Information(props) {
+  return (
+    <CharacterContext.Consumer>
+      {
+        (value) => {
+          return (
+            <div>
+              <h3>S</h3>
+              <h3>Name: {value.name}</h3>
+              <h3>Age: {value.age}</h3>
+              <h3>S</h3>
+            </div>
+          );
+        }
+      }
+    </CharacterContext.Consumer>
+  );
 }
-Information.contextType = CharacterContext;
