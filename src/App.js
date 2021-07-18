@@ -1,6 +1,6 @@
 import React from "react";
 
-export default class App extends React.Component {
+export default class App extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -9,20 +9,16 @@ export default class App extends React.Component {
     }
   }
   render() {
-    console.log("render()");
+    console.log("App render()");
     return (
       <div>
         <h2>Count: {this.state.count}</h2>
         <button onClick={ae => this.add(1)}> +1 </button>
         <button onClick={e => this.changeMoive("千と千尋の神隠し")}>Change</button>
+        <FunctionComponent />
+        <ClassComponent />
       </div>
     );
-  }
-  shouldComponentUpdate(nextProps, nextState) {
-    if (this.state.count !== nextState.count) {
-      return true;
-    }
-    return false;
   }
   add(vlaue) {
     this.setState({
@@ -33,5 +29,25 @@ export default class App extends React.Component {
     this.setState({
       movieList: movie
     });
+  }
+}
+
+function FunctionComponent(props) {
+  console.log("Function Component");
+  return (
+    <div>
+      <h2>Function Component</h2>
+    </div>
+  );
+}
+
+class ClassComponent extends React.PureComponent {
+  render() {
+    console.log("Class Component");
+    return (
+      <div>
+        <h2>Class Component</h2>
+      </div>
+    );
   }
 }
