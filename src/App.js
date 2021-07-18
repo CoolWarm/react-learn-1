@@ -4,50 +4,50 @@ export default class App extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      count: 0,
-      movie: "Forrest Gump"
+      friends: [
+        {
+          name: "Harry Potter",
+          age: 14
+        },
+        {
+          name: "Peter Parker",
+          age: 18
+        },
+      ]
     }
   }
   render() {
-    console.log("App render()");
     return (
       <div>
-        <h2>Count: {this.state.count}</h2>
-        <button onClick={ae => this.add(1)}> +1 </button>
-        <button onClick={e => this.changeMoive("千と千尋の神隠し")}>Change</button>
-        <FunctionComponent />
-        <ClassComponent />
+        <ul>
+          {
+            this.state.friends.map((item, index) => {
+              return <li key={item.name}>{item.name}</li>
+            })
+          }
+        </ul>
+        <button onClick={e => this.addFriend()}> ADD </button>
       </div>
     );
   }
-  add(vlaue) {
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   if (this.state.friends !== nextState.friends) {
+  //     return true;
+  //   }
+  //   return false;
+  // }
+  addFriend() {
+    const newFriend = {
+      name: "Sherlock Holmes",
+      age: 26
+    }
+    // 浅拷贝 == 在原state上直接修改 ×
+    // const newFriends = this.state.friends;
+    // 深拷贝 == 将数组中的变量放入新建的数组中 √
+    const newFriends = [...this.state.friends];
+    newFriends.push(newFriend);
     this.setState({
-      count: this.state.count + 1
+      friends: newFriends
     });
-  }
-  changeMoive(movie) {
-    this.setState({
-      movieList: movie
-    });
-  }
-}
-
-const FunctionComponent = React.memo(function FunctionComponent(props) {
-  console.log("Function Component");
-  return (
-    <div>
-      <h2>Function Component</h2>
-    </div>
-  );
-});
-
-class ClassComponent extends React.PureComponent {
-  render() {
-    console.log("Class Component");
-    return (
-      <div>
-        <h2>Class Component</h2>
-      </div>
-    );
   }
 }
