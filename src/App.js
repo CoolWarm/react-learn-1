@@ -32,14 +32,14 @@ export default class App extends React.PureComponent {
   }
 }
 
-function FunctionComponent(props) {
+const FunctionComponent = React.memo(function FunctionComponent(props) {
   console.log("Function Component");
   return (
     <div>
       <h2>Function Component</h2>
     </div>
   );
-}
+});
 
 class ClassComponent extends React.PureComponent {
   render() {
