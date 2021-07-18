@@ -4,51 +4,34 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      movieList: ["The Shawshank Redemption", "Forrest Gump", "Léon", "Titanic"]
+      count: 0,
+      movie: "Forrest Gump"
     }
   }
   render() {
+    console.log("render()");
     return (
       <div>
-        <h2>Movie List</h2>
-        <ul>
-          {
-            this.state.movieList.map((item, index) => {
-              return (
-                <li key={item}>{item}</li>
-              );
-            })
-          }
-        </ul>
-        <button onClick={e => this.addMoive("千と千尋の神隠し")}>Add</button>
-        <FunctionComponent />
-        <ClassComponent />
+        <h2>Count: {this.state.count}</h2>
+        <button onClick={ae => this.add(1)}> +1 </button>
+        <button onClick={e => this.changeMoive("千と千尋の神隠し")}>Change</button>
       </div>
     );
   }
-  addMoive(movie) {
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.state.count !== nextState.count) {
+      return true;
+    }
+    return false;
+  }
+  add(vlaue) {
     this.setState({
-      movieList: [...this.state.movieList, movie]
+      count: this.state.count + 1
     });
   }
-}
-
-function FunctionComponent(props) {
-  console.log("Function Component");
-  return (
-    <div>
-      <h2>Function Component</h2>
-    </div>
-  );
-}
-
-class ClassComponent extends React.Component {
-  render() {
-    console.log("Class Component");
-    return (
-      <div>
-        <h2>Class Component</h2>
-      </div>
-    );
+  changeMoive(movie) {
+    this.setState({
+      movieList: movie
+    });
   }
 }
