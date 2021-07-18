@@ -4,36 +4,30 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      count: 0
+      movieList: ["The Shawshank Redemption", "Forrest Gump", "Léon", "Titanic"]
     }
   }
   render() {
     return (
       <div>
-        <h2>{this.state.count}</h2>
-        <button onClick={e => this.add(1)}> +1 </button>
+        <h2>Movie List</h2>
+        <ul>
+          {
+            this.state.movieList.map((item, index) => {
+              return (
+                <li key={item}>{item}</li>
+              );
+            })
+          }
+        </ul>
+        <button onClick={e => this.addMoive("千と千尋の神隠し")}>Add</button>
       </div>
     );
   }
-  add(value) {
-    // setState操作被合并
-    // this.setState({
-    //   count: this.state.count + value
-    // }, ()=>{console.log("+1");});
-    // this.setState({
-    //   count: this.state.count + value
-    // }, ()=>{console.log("+1");});
-
-    // setState合并时进行累加
-    this.setState((prevState, nextProps) => {
-      return {
-        count: prevState.count + 1
-      }
-    }, ()=>{console.log("+1");})
-    this.setState((prevState, nextProps) => {
-      return {
-        count: prevState.count + 1
-      }
-    }, ()=>{console.log("+1");})
+  addMoive(movie) {
+    this.setState({
+      // movieList: [...this.state.movieList, movie]
+      movieList: [movie, ...this.state.movieList]
+    });
   }
 }
