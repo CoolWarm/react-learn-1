@@ -3,55 +3,61 @@ import React from "react";
 export default class App extends React.PureComponent {
   constructor(props) {
     super(props);
-    this.titleRef2 = React.createRef();
-    this.titleRef3 = null;
-    this.counterRef = React.createRef();
-  }
-  render() {
-    return (
-      <div>
-        <h2 ref="titleRef1">Hello World</h2>
-        <h2 ref={this.titleRef2}>Hello World</h2>
-        <h2 ref={(arg) => {this.titleRef3 = arg}}>Hello World</h2>
-        <button onClick={e => this.changeText()}>Change Text</button>
-        <hr />
-        <Counter ref={this.counterRef} />
-        <button onClick={e => this.counterAdd(2)}> ++ </button>
-      </div>
-    );
-  }
-  changeText() {
-    // 字符串 不推荐
-    this.refs.titleRef1.innerHTML = "Hello Ref1";
-    // 对象 推荐
-    this.titleRef2.current.innerHTML = "Hello Ref2";
-    // 函数
-    this.titleRef3.innerHTML = "Hello Ref3";
-  }
-  counterAdd(value) {
-    // 控制自定义组件
-    this.counterRef.current.add(value);
-  }
-}
-
-class Counter extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state ={
-      count: 0
+    this.state = {
+      username: "",
+      password: "",
+      hobby: "football"
     }
   }
   render() {
     return (
       <div>
-        <h2>Count: {this.state.count}</h2>
-        <button onClick={e => this.add(1)}> +1 </button>
+        <form onSubmit={e => this.handleSubimt(e)}>
+          <div>
+            <label htmlFor="username">Username:
+              <input type="text"
+                id="username"
+                name="username"
+                value={this.state.username}
+                onChange={e => this.handleChange(e)}
+              />
+            </label>
+          </div>
+          <div>
+            <label htmlFor="password">Password:
+              <input type="password"
+                id="password"
+                name="password"
+                value={this.state.password}
+                onChange={e => this.handleChange(e)}
+              />
+            </label>
+          </div>
+          <div>
+            <label htmlFor="hobby">Hobby
+              <select id="hobby"
+                name="hobby"
+                value={this.state.hobby}
+                onChange={e => this.handleChange(e)}>
+                <option value="baskball">Basketball</option>
+                <option value="football">Football</option>
+                <option value="volleyball">volleyball</option>
+              </select>
+            </label>
+          </div>
+          <input type="submit" value="SUBMIT" />
+        </form>
       </div>
     );
   }
-  add(value) {
+  handleChange(event) {
     this.setState({
-      count: this.state.count + value
+      // 计算属性名 computed property names
+      [event.target.name]: event.target.value
     });
+  }
+  handleSubimt(event) {
+    event.preventDefault();
+    console.log(this.state.username, this.state.password, this.state.hobby);
   }
 }
