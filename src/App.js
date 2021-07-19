@@ -3,61 +3,55 @@ import React from "react";
 export default class App extends React.PureComponent {
   constructor(props) {
     super(props);
-    this.state = {
-      friends: [
-        {
-          name: "Harry Potter",
-          age: 14
-        },
-        {
-          name: "Peter Parker",
-          age: 18
-        },
-      ]
+    this.titleRef2 = React.createRef();
+    this.titleRef3 = null;
+    this.counterRef = React.createRef();
+  }
+  render() {
+    return (
+      <div>
+        <h2 ref="titleRef1">Hello World</h2>
+        <h2 ref={this.titleRef2}>Hello World</h2>
+        <h2 ref={(arg) => {this.titleRef3 = arg}}>Hello World</h2>
+        <button onClick={e => this.changeText()}>Change Text</button>
+        <hr />
+        <Counter ref={this.counterRef} />
+        <button onClick={e => this.counterAdd(2)}> ++ </button>
+      </div>
+    );
+  }
+  changeText() {
+    // 字符串 不推荐
+    this.refs.titleRef1.innerHTML = "Hello Ref1";
+    // 对象 推荐
+    this.titleRef2.current.innerHTML = "Hello Ref2";
+    // 函数
+    this.titleRef3.innerHTML = "Hello Ref3";
+  }
+  counterAdd(value) {
+    // 控制自定义组件
+    this.counterRef.current.add(value);
+  }
+}
+
+class Counter extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state ={
+      count: 0
     }
   }
   render() {
     return (
       <div>
-        <ul>
-          {
-            this.state.friends.map((item, index) => {
-              return (
-                <li key={item.name}>
-                  name: {item.name}
-                  age: {item.age}
-                  <button onClick={e => this.addAge(index)}>Age+1</button>
-                </li>
-              );
-            })
-          }
-        </ul>
-        <button onClick={e => this.addFriend()}> ADD </button>
+        <h2>Count: {this.state.count}</h2>
+        <button onClick={e => this.add(1)}> +1 </button>
       </div>
     );
   }
-  addAge(index) {
-    // 虽然在内存中，newFriends和friends中的对象是相同的，修改其中一个数组中的元素，另一个数组中也会相应改变
-    // 但在PureComponent或shouldComponentUpdate中，比较的时前后state，因为两者指向的内存不一样，即使内容一样，也判断为不相等
-    // 所以此方式没有问题（推荐）
-    const newFriends = [...this.state.friends];
-    newFriends[index].age++;
+  add(value) {
     this.setState({
-      friends: newFriends
-    })
-  }
-  addFriend() {
-    const newFriend = {
-      name: "Sherlock Holmes",
-      age: 26
-    }
-    // 浅拷贝 == 在原state上直接修改 ×
-    // const newFriends = this.state.friends;
-    // 深拷贝 == 将数组中的变量放入新建的数组中 √
-    const newFriends = [...this.state.friends];
-    newFriends.push(newFriend);
-    this.setState({
-      friends: newFriends
+      count: this.state.count + value
     });
   }
 }
