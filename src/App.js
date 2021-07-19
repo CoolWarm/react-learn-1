@@ -22,7 +22,13 @@ export default class App extends React.PureComponent {
         <ul>
           {
             this.state.friends.map((item, index) => {
-              return <li key={item.name}>{item.name}</li>
+              return (
+                <li key={item.name}>
+                  name: {item.name}
+                  age: {item.age}
+                  <button onClick={e => this.addAge(index)}>Age+1</button>
+                </li>
+              );
             })
           }
         </ul>
@@ -30,12 +36,16 @@ export default class App extends React.PureComponent {
       </div>
     );
   }
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   if (this.state.friends !== nextState.friends) {
-  //     return true;
-  //   }
-  //   return false;
-  // }
+  addAge(index) {
+    // 虽然在内存中，newFriends和friends中的对象是相同的，修改其中一个数组中的元素，另一个数组中也会相应改变
+    // 但在PureComponent或shouldComponentUpdate中，比较的时前后state，因为两者指向的内存不一样，即使内容一样，也判断为不相等
+    // 所以此方式没有问题（推荐）
+    const newFriends = [...this.state.friends];
+    newFriends[index].age++;
+    this.setState({
+      friends: newFriends
+    })
+  }
   addFriend() {
     const newFriend = {
       name: "Sherlock Holmes",
