@@ -10,16 +10,10 @@ class App extends React.PureComponent {
   }
 }
 
-App.displayName = "Inside";
-
 function enhanceComponent(WrappedComponent) {
-  class EnhancedComponent extends React.PureComponent {
-    render() {
-      return <WrappedComponent {...this.props} />
-    }
+  return function EnhancedComponent(props) {
+    return <WrappedComponent {...props}/>
   }
-  EnhancedComponent.displayName = "Outside";
-  return EnhancedComponent;
 }
 
 export default enhanceComponent(App);
