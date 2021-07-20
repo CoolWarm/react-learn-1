@@ -4,37 +4,38 @@ export default class App extends React.PureComponent {
   render() {
     return (
       <div>
-        <h1>APP</h1>
-        <AuthMePage isLogin={true} />
+        <Test />
       </div>
     );
   }
 }
 
-function withAuth(WrappedComponent) {
-  return (props) => {
-    if (props.isLogin) {
-      return <WrappedComponent {...props} />
-    } else {
-      return <LoginPage />
+function withRenderTime(WrappedComponent) {
+  return class extends React.Component {
+    render() {
+      return (
+        <WrappedComponent />
+      )
+    }
+    UNSAFE_componentWillMount() {
+      this.beginTime = Date.now();
+    }
+    componentDidMount() {
+      this.endTime = Date.now();
+      const interval = this.endTime - this.beginTime;
+      console.log(`${WrappedComponent.name}: ${interval}`);
     }
   }
 }
 
-class MePage extends React.PureComponent {
+class TestComponent extends React.PureComponent {
   render() {
     return (
-      <h2>ME</h2>
+      <div>
+        <h2>Test</h2>
+      </div>
     )
   }
 }
 
-const AuthMePage = withAuth(MePage);
-
-class LoginPage extends React.PureComponent {
-  render() {
-    return (
-      <h2>LOG IN</h2>
-    )
-  }
-}
+const Test = withRenderTime(TestComponent);
