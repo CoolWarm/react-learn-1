@@ -1,6 +1,5 @@
 import React from "react";
-
-import styled from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 
 export default class App extends React.PureComponent {
   constructor(props) {
@@ -11,22 +10,22 @@ export default class App extends React.PureComponent {
   }
   render() {
     return (
-      <AppWrapper>
+      <ThemeProvider theme={{ themeColor: "lightskyblue" }}>
         <h2>Heading</h2>
         <p>Paragraph</p>
-        <MyInput type="password" border={this.state.themeColor} />
-      </AppWrapper>
+        <MyButton>Button</MyButton>
+        <MyPrimaryButton>Primary Button</MyPrimaryButton>
+      </ThemeProvider>
     );
   }
 }
 
-const AppWrapper = styled.div`
-  font-size: 20px;
+const MyButton = styled.button`
+  padding: 10px 30px;
+  font-size: 15px;
 `;
-
-const MyInput = styled.input.attrs({
-  placeholder: "my input"
-})`
-  color: brown;
-  border-color: ${props => props.border};
+// 继承
+const MyPrimaryButton = styled(MyButton)`
+  color: darkblue;
+  background-color: ${props => props.theme.themeColor};
 `;
