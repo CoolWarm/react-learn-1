@@ -1,25 +1,32 @@
 import React from "react";
 
-import {
-  AppWrapper,
-  TitleWrapper
-} from './style';
+import styled from 'styled-components';
 
 export default class App extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      themeColor: "green"
+    }
+  }
   render() {
     return (
       <AppWrapper>
-        <TitleWrapper>Heading</TitleWrapper>
-        <div className="article">
-          <p>Paragraph</p>
-          <ul>
-            <li>item1</li>
-            <li className="active">item2</li>
-            <li>item3</li>
-            <li>item4</li>
-          </ul>
-        </div>
+        <h2>Heading</h2>
+        <p>Paragraph</p>
+        <MyInput type="password" border={this.state.themeColor} />
       </AppWrapper>
     );
   }
 }
+
+const AppWrapper = styled.div`
+  font-size: 20px;
+`;
+
+const MyInput = styled.input.attrs({
+  placeholder: "my input"
+})`
+  color: brown;
+  border-color: ${props => props.border};
+`;
