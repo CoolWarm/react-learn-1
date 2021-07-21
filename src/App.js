@@ -1,35 +1,23 @@
-import React, { PureComponent } from "react";
-import ReactDOM from "react-dom";
+import React from "react";
 
 export default class App extends React.PureComponent {
-  render() {
-    return (
-      <div>
-      <h1>APP</h1>
-        <Modal>
-          <Pop />
-          <h3>Hello World</h3>
-        </Modal>
-      </div>
-    );
+  constructor(props) {
+    super(props);
+    this.state = {
+      headColor: "brown"
+    }
   }
-}
-
-class Modal extends PureComponent {
   render() {
-    return ReactDOM.createPortal(
-      this.props.children,
-      document.querySelector("#modal")
-    );
-  }
-}
+    const headStyle = {
+      color: this.state.headColor,
+      fontSize: "40px"
+    }
 
-class Pop extends PureComponent {
-  render() {
     return (
-      <div>
-        <h2>POP</h2>
-      </div>
-    )
+      <>
+        <h2 style={headStyle}>Heading</h2>
+        <p style={{color: "green", fontSize: "20px"}}>paragraph</p>
+      </>
+    );
   }
 }
