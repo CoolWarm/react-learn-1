@@ -1,35 +1,56 @@
 import React from "react";
 
-import moment from 'moment';
-import { Button, Menu, Dropdown, DatePicker } from "antd";
+import { Divider } from 'antd';
+
+import CommentInput from "./components/CommentInput";
+import CommentItem from "./components/CommentItem";
 
 export default class App extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-
+      commentList: []
     }
   }
   render() {
-    const menu = (
-      <Menu onClick={e => this.handleMenuClick(e)}>
-        <Menu.Item key="1">1st item</Menu.Item>
-        <Menu.Item key="2">2nd item</Menu.Item>
-        <Menu.Item key="3">3rd item</Menu.Item>
-      </Menu>
-    );
     return (
-      <>
-        <Button type="primary">primary</Button>
-        <Button>secondary</Button>
-        <Dropdown.Button overlay={menu}>Actions</Dropdown.Button>
-        <DatePicker allowClear={false} />
-        <DatePicker defaultValue={moment('2030/01/01', "YYYY/MM/DD")} format="YYYY/MM/DD" />
-      </>
+      <div style={{ width: "500px", padding: "50px", margin: "50px auto" }}>
+        <Divider orientation="left" >
+          Enter comments here:
+        </Divider>
+        <CommentInput submitComment={this.submitComment.bind(this)} />
+        <Divider
+          plain
+          dashed
+          orientation="center" >
+          comment
+        </Divider>
+        {
+          this.state.commentList.map((item, index) => {
+            return <CommentItem
+              key={item.id}
+              avatar={item.avatar}
+              username={item.username}
+              datetime={item.datetime}
+              comment={item.comment}
+              removeComment={() => this.removeComment(index)}
+            />
+          })
+        }
+      </div>
     );
   }
-  handleMenuClick(e) {
-    console.log('click', e);
+  submitComment(comment) {
+    this.setState({
+      commentList: [...this.state.commentList, comment]
+    });
+  }
+  removeComment(index) {
+    const commentList_ = [...this.state.commentList];
+    commentList_.splice(index, 1);
+    this.setState({
+      commentList: commentList_
+    });
   }
 }
 
